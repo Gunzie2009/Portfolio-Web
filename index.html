@@ -8,19 +8,24 @@
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        /* Tailwind theme extension for colors and fonts */
+        /* Tailwind theme extension for a refined dark palette */
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'primary-dark': '#0b0b0b',
-                        'card-bg': '#121827', /* New distinct dark blue for activity cards */
-                        'accent': '#38bdf8', /* Sky Blue */
-                        'accent-dark': '#0ea5e9',
-                        'text-faint': '#94a3b8' /* Slate Gray */
+                        // New Dark/Sleek Palette
+                        'primary-dark': '#0D1117', // Deep Navy/Black (Main Background)
+                        'card-bg': '#161B22',      // Slightly Lighter Slate/Navy (Card Background)
+                        'accent': '#38bdf8',       // Vibrant Sky Blue (Primary Accent)
+                        'accent-dark': '#0ea5e9',  // Darker Sky Blue
+                        'text-faint': '#8B949E'    // Subtle Gray (Faint Text/Borders)
                     },
                     fontFamily: {
                         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
+                    },
+                    boxShadow: {
+                        // Custom shadow for the hero element
+                        'hero-glow': '0 0 40px rgba(56, 189, 248, 0.4), 0 0 100px rgba(56, 189, 248, 0.15)',
                     }
                 }
             }
@@ -30,51 +35,58 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-        /* 1. DOT PATTERN BACKGROUND (Increased Visibility to 0.20) */
-        .dot-pattern {
-            /* Increased opacity from 0.08 to 0.20 for higher visibility */
-            background-image:
-                radial-gradient(circle, rgba(255,255,255,0.20) 2px, rgba(255,255,255,0) 2px);
-            background-size: 60px 60px;
-            background-color: #000000;
+        /* 1. MAIN BACKGROUND STYLE: Deep Dark with Subtle Radial Glow */
+        body {
+            background-color: #0D1117; /* Use primary-dark */
+        }
+        
+        /* Sublte animation for the main page background */
+        @keyframes subtle-glow-bg {
+            0%, 100% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.05); opacity: 0.2; }
+        }
+        
+        .radial-glow-bg {
+            /* Large, soft radial gradient for depth */
+            background: radial-gradient(circle at 50% 10%, rgba(56, 189, 248, 0.05) 0%, rgba(13, 17, 23, 1) 40%);
+            animation: subtle-glow-bg 8s ease-in-out infinite alternate;
         }
 
-        /* 3. BLUE GLOW EFFECT ON THE BOX BORDER (NOW STRONGER) */
+        /* 2. ENHANCED GLOW EFFECT ON THE INTRO BOX */
         .glow-outline {
             position: relative;
-            border-radius: 1rem;
+            border-radius: 1.5rem; /* Larger radius */
         }
         .glow-outline::before {
             content: "";
             position: absolute;
-            inset: -15px; /* Increased inset from -8px for wider glow */
-            border-radius: 1.25rem;
-            /* Increased gradient opacity for a brighter glow */
-            background: linear-gradient(90deg, rgba(56,189,248,0.5), rgba(14,165,233,0.3)); 
-            z-index: -1;
-            filter: blur(20px); /* Increased blur from 12px for stronger glow */
+            inset: -2px; /* A thin light border */
+            border-radius: 1.6rem;
+            /* Stronger, more intense blue shadow */
+            box-shadow: 
+                0 0 25px rgba(56, 189, 248, 0.6), /* Inner glow */
+                0 0 60px rgba(56, 189, 248, 0.2); /* Wider halo */
             opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-        .glow-outline:hover::before {
-             opacity: 0.9;
+            transition: all 0.5s ease;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        /* CARD GLOW/BORDER FOR ACTIVITIES and new About box */
+        /* 3. CARD GLOW/BORDER FOR ACTIVITIES (Sleek Border Gradient) */
         .activity-card-glow {
             position: relative;
             overflow: hidden;
+            border: 1px solid transparent; /* Base transparent border */
+            background-clip: padding-box;
+            transition: all 0.3s ease;
         }
         .activity-card-glow::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 0.75rem; /* Matches rounded-xl */
-            padding: 2px; /* Thickness of the visible border/glow */
-            background: linear-gradient(135deg, rgba(56,189,248, 0.4) 0%, rgba(14,165,233, 0.1) 100%);
+            inset: 0;
+            border-radius: 0.8rem; /* Matches rounded-xl */
+            padding: 1px; /* Border thickness */
+            background: linear-gradient(135deg, rgba(56,189,248, 0.3) 0%, rgba(14,165,233, 0) 100%);
             -webkit-mask: 
                 linear-gradient(#fff 0 0) content-box, 
                 linear-gradient(#fff 0 0);
@@ -83,46 +95,49 @@
                 linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
-            z-index: 0; /* Ensures it is behind content but above card background */
+            z-index: 0; 
             pointer-events: none;
             transition: all 0.3s ease;
         }
-        /* Hover effect - makes the glow stronger */
+        /* Subtle lift and border intensification on hover */
+        .activity-card-glow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
         .activity-card-glow:hover::before {
-            background: linear-gradient(135deg, rgba(56,189,248, 0.7) 0%, rgba(14,165,233, 0.2) 100%);
+            background: linear-gradient(135deg, rgba(56,189,248, 0.8) 0%, rgba(14,165,233, 0.4) 100%);
         }
 
-        /* Sublte animation for the main page background */
-        @keyframes subtle-glow {
-            0%, 100% { box-shadow: 0 0 30px rgba(56,189,248,0.03); }
-            50% { box-shadow: 0 0 80px rgba(56,189,248,0.06); }
-        }
-        .page-glow { animation: subtle-glow 6s ease-in-out infinite; }
-        
+
         /* Focus ring for accessibility */
-        .focus-ring:focus { outline: 3px solid rgba(56,189,248,0.18); outline-offset: 2px; }
+        .focus-ring:focus { outline: 3px solid rgba(56,189,248,0.3); outline-offset: 2px; }
 
     </style>
 </head>
-<body class="dot-pattern min-h-screen text-white font-sans antialiased relative">
+<body class="min-h-screen text-white font-sans antialiased relative">
     
-    <!-- BACKGROUND LAYER: subtle blur/glow overlay for depth -->
-    <div aria-hidden="true" class="fixed inset-0 z-0 page-glow"></div>
+    <!-- BACKGROUND LAYER: Subtle Gradient Aura -->
+    <div aria-hidden="true" class="fixed inset-0 z-0 radial-glow-bg"></div>
 
     <!-- 2. INTRO OVERLAY: Perfectly Centered Welcome Screen -->
     <div id="intro-overlay"
-        class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/95 transition-all duration-700">
-        <!-- Avatar Circle (Enlarged to w-32/h-32) -->
-        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center text-white text-2xl md:text-3xl font-bold bg-accent shadow-2xl shadow-accent/40 mb-12">
-            Arman
+        class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-primary-dark/95 transition-all duration-700">
+        
+        <!-- Avatar Circle (Slightly more defined look) -->
+        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center text-white text-3xl md:text-4xl font-bold bg-accent shadow-2xl shadow-accent/40 mb-12 transform hover:scale-105 transition-transform duration-300">
+            A.M
         </div>
-        <!-- Welcome Box (Background changed to dark blue card-bg, glow-outline is applied) -->
-        <div class="max-w-xl w-full mx-6 py-16 px-10 md:px-12 text-center rounded-2xl bg-card-bg/95 glow-outline transition-all duration-300">
-            <h1 class="text-5xl md:text-6xl font-extrabold text-accent">
-                WELCOME
+        
+        <!-- Welcome Box: Uses New Card BG and Stronger Glow CSS -->
+        <div class="max-w-xl w-full mx-6 p-10 md:p-12 text-center rounded-2xl bg-card-bg glow-outline shadow-xl transition-all duration-300">
+            <h1 class="text-6xl md:text-7xl font-extrabold text-accent leading-tight">
+                ARMAN
             </h1>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white/95 mt-1">
+                MOHAPATRA
+            </h2>
 
-            <div class="mt-4 text-3xl space-x-4">
+            <div class="mt-6 text-3xl space-x-6 text-accent-dark">
                 <span>💻</span>
                 <span>🎬</span>
                 <span>✍️</span>
@@ -130,18 +145,16 @@
                 <span>🥊</span>
             </div>
 
-            <p class="mt-6 text-lg md:text-xl text-white/90 font-semibold leading-relaxed">
-                A student, aspiring <strong class="text-accent-dark">Filmmaker</strong>, and dedicated member of
-                my <strong class="text-accent-dark">community</strong>.
+            <p class="mt-8 text-lg md:text-xl text-white/90 font-medium leading-relaxed max-w-lg mx-auto">
+                Aspiring <strong class="text-accent">Filmmaker</strong>, Tech Enthusiast, and Community Leader.
             </p>
-            <p class="mt-3 text-base text-text-faint max-w-lg mx-auto">
-                My passion lies in applying critical thinking and leadership skills gained
-                through extracurriculars to real-world challenges.
+            <p class="mt-2 text-base text-text-faint max-w-lg mx-auto">
+                Bridging analytical rigor (PCM CS) with creative passion.
             </p>
 
             <button id="enter-btn"
-                    class="mt-10 px-8 py-3 rounded-full bg-accent text-black font-bold text-lg shadow-xl shadow-accent/30 hover:bg-accent-dark transition-all duration-200 focus-ring transform hover:-translate-y-0.5 hover:shadow-2xl">
-                Enter Portfolio
+                    class="mt-12 px-10 py-4 rounded-full bg-accent text-primary-dark font-bold text-lg shadow-hero-glow hover:bg-accent-dark transition-all duration-300 focus-ring transform hover:-translate-y-1">
+                Explore Portfolio
             </button>
         </div>
     </div>
@@ -152,29 +165,28 @@
     <header id="header-nav" class="fixed top-4 left-0 right-0 z-40 pointer-events-auto opacity-0 hidden transition-opacity duration-300">
         <nav class="max-w-6xl mx-auto px-6 md:px-12 flex items-center justify-between">
             <!-- Logo/Name -->
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3">
                 <a href="#" class="inline-flex items-center gap-3" onclick="showPage('page-about'); return false;">
-                    <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-accent to-accent-dark flex items-center justify-center text-black font-bold text-xl">
+                    <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-primary-dark font-bold text-lg border border-accent/50">
                         A
                     </div>
                     <span class="text-white font-semibold text-lg hidden sm:inline">Arman Mohapatra</span>
                 </a>
             </div>
 
-            <!-- Desktop Menu -->
-            <div id="main-nav" class="hidden md:flex items-center gap-2 bg-black/40 px-2 py-1 rounded-full backdrop-blur-sm border border-white/10">
+            <!-- Desktop Menu (Slightly darker, more defined border) -->
+            <div id="main-nav" class="hidden md:flex items-center gap-1 bg-card-bg/70 px-1 py-1 rounded-full backdrop-blur-md border border-text-faint/20 shadow-lg">
                 <a href="#" data-page="page-about" onclick="showPage('page-about'); return false;"
-                   class="nav-link text-gray-300 hover:text-accent transition px-4 py-2 rounded-full font-medium focus-ring bg-accent/20 text-accent" data-active="true">About</a>
-                <!-- Updated link from 'Projects' to 'Activities' -->
+                   class="nav-link text-text-faint hover:text-accent transition px-4 py-2 rounded-full font-medium focus-ring bg-accent/20 text-accent" data-active="true">About</a>
                 <a href="#" data-page="page-activities" onclick="showPage('page-activities'); return false;"
-                   class="nav-link text-gray-300 hover:text-accent transition px-4 py-2 rounded-full font-medium focus-ring">Activities</a>
+                   class="nav-link text-text-faint hover:text-accent transition px-4 py-2 rounded-full font-medium focus-ring">Activities</a>
                 <a href="#" data-page="page-contact" onclick="showPage('page-contact'); return false;"
-                   class="nav-link text-gray-300 hover:text-accent transition px-4 py-2 rounded-full font-medium focus-ring">Contact</a>
+                   class="nav-link text-text-faint hover:text-accent transition px-4 py-2 rounded-full font-medium focus-ring">Contact</a>
             </div>
 
             <!-- Mobile Menu Toggle -->
             <div class="md:hidden">
-                <button id="mobile-toggle" class="p-2 rounded-full bg-black/40 focus-ring" aria-label="Open menu">
+                <button id="mobile-toggle" class="p-2 rounded-full bg-card-bg/70 focus-ring border border-text-faint/20" aria-label="Open menu">
                     <svg id="menu-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
@@ -186,11 +198,11 @@
         </nav>
 
         <!-- Mobile menu dropdown -->
-        <div id="mobile-menu" class="md:hidden fixed top-20 left-6 right-6 bg-black/80 backdrop-blur-md rounded-xl shadow-2xl shadow-black/50 p-4 hidden z-50 border border-white/10">
+        <div id="mobile-menu" class="md:hidden fixed top-20 left-6 right-6 bg-card-bg/95 backdrop-blur-sm rounded-xl shadow-2xl shadow-black/50 p-4 hidden z-50 border border-text-faint/20">
             <div class="flex flex-col gap-3">
-                <a href="#" class="px-3 py-2 rounded text-gray-300 hover:bg-accent/10 hover:text-accent transition focus-ring" onclick="showPage('page-about'); toggleMobileMenu(); return false;">About</a>
-                <a href="#" class="px-3 py-2 rounded text-gray-300 hover:bg-accent/10 hover:text-accent transition focus-ring" onclick="showPage('page-activities'); toggleMobileMenu(); return false;">Activities</a>
-                <a href="#" class="px-3 py-2 rounded text-gray-300 hover:bg-accent/10 hover:text-accent transition focus-ring" onclick="showPage('page-contact'); toggleMobileMenu(); return false;">Contact</a>
+                <a href="#" class="px-3 py-2 rounded text-text-faint hover:bg-accent/10 hover:text-accent transition focus-ring" onclick="showPage('page-about'); toggleMobileMenu(); return false;">About</a>
+                <a href="#" class="px-3 py-2 rounded text-text-faint hover:bg-accent/10 hover:text-accent transition focus-ring" onclick="showPage('page-activities'); toggleMobileMenu(); return false;">Activities</a>
+                <a href="#" class="px-3 py-2 rounded text-text-faint hover:bg-accent/10 hover:text-accent transition focus-ring" onclick="showPage('page-contact'); toggleMobileMenu(); return false;">Contact</a>
             </div>
         </div>
     </header>
@@ -198,198 +210,268 @@
     <!-- MAIN CONTENT (INITIALLY HIDDEN) -->
     <main id="main" class="relative z-10 pt-32 pb-24 max-w-6xl mx-auto px-6 md:px-12 opacity-0 hidden transition-opacity duration-300">
 
-        <!-- Page: About (Grid remains 4/5 for wider text box) -->
+        <!-- Page: About -->
         <section id="page-about" class="page fade-section">
             
-            <div class="grid grid-cols-1 md:grid-cols-5 gap-10 items-start">
-                <!-- Text Box now takes 4 columns on medium/large screens -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-10 items-center mb-20">
+                <!-- Text Box (Aligned left on desktop) -->
                 <div class="md:col-span-4">
-                    <div class="bg-card-bg p-6 md:p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40">
+                    <div class="bg-card-bg p-8 md:p-10 rounded-xl activity-card-glow shadow-2xl shadow-black/40 h-full transition-all duration-300">
                         <!-- Title and Subtitle -->
-                        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2">About Me</h1>
-                        <p class="text-lg text-accent font-semibold mb-6 hidden md:block">Arman Mohapatra's Portfolio</p>
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2 tracking-wide">Hello, I'm Arman.</h1>
+                        <p class="text-lg text-accent font-semibold mb-6">Student, Creator, Innovator.</p>
 
-                        <p class="text-white/90 text-lg leading-relaxed mb-8">
-                            I'm Arman Mohapatra, an 11th-grade student at DPS-MIS, Qatar, currently focused on Physics, Chemistry, Mathematics, and Computer Science (PCM CS). While I possess an active interest in <strong class="text-accent">coding</strong> and appreciate its power in solving complex problems through technology, my true aspiration lies in becoming a <strong class="text-accent">filmmaker</strong>. This seemingly unconventional path is balanced by a deep respect for learning, ensuring I prioritize academics. Complementing these pursuits, <strong class="text-accent">writing</strong> serves as a vital creative outlet, and I enjoy moments of relaxation through games like <strong class="text-accent">badminton and chess</strong>. This blend reflects a drive for both analytical rigor and creative expression.
+                        <p class="text-text-faint text-lg leading-relaxed mb-8">
+                            I'm an 11th-grade student at DPS-MIS, Qatar, balancing deep academic focus on Physics, Chemistry, Mathematics, and Computer Science (<strong class="text-accent">PCM CS</strong>) with a driven pursuit of <strong class="text-accent">filmmaking</strong>. This portfolio is a reflection of my dual commitment: applying <strong class="text-accent-dark">analytical rigor</strong> to technical challenges while nurturing a strong passion for creative <strong class="text-accent-dark">storytelling</strong> and community impact.
                         </p>
-                        <button onclick="showPage('page-activities');" class="px-6 py-3 rounded-lg bg-accent text-black font-semibold text-lg hover:bg-accent-dark transition focus-ring shadow-xl shadow-accent/30">
-                            View My Activities
+                        <button onclick="showPage('page-activities');" class="px-7 py-3 rounded-lg bg-accent text-primary-dark font-bold text-base hover:bg-accent-dark transition focus-ring shadow-xl shadow-accent/30 transform hover:scale-[1.02]">
+                            Discover My Activities →
                         </button>
                     </div>
                 </div>
-                <!-- Avatar now takes 1 column on medium/large screens -->
-                <div class="md:col-span-1 flex justify-center md:justify-end">
+                <!-- Avatar (Aligned right on desktop, centered on mobile) -->
+                <div class="md:col-span-1 flex justify-center md:justify-end order-first md:order-none">
                     <!-- Circular Avatar with A.M -->
-                    <div class="w-48 h-48 rounded-full bg-accent flex items-center justify-center text-primary-dark font-bold text-5xl border-[10px] border-accent/30 shadow-2xl shadow-accent/40">
+                    <div class="w-40 h-40 md:w-48 md:h-48 rounded-full bg-accent flex items-center justify-center text-primary-dark font-extrabold text-6xl border-[6px] border-accent/50 shadow-hero-glow">
                         A.M
                     </div>
                 </div>
             </div>
             
+            <!-- NEW SECTION: Philosophy & Education Snapshot -->
+            <div class="grid md:grid-cols-3 gap-8 mb-20">
+                <!-- Philosophy Card (2/3 width) -->
+                <div class="md:col-span-2 bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 transition-all duration-300">
+                    <h2 class="text-2xl font-bold text-white mb-4 border-b border-text-faint/10 pb-2">
+                        <span class="text-accent mr-2">💡</span> My Guiding Philosophy
+                    </h2>
+                    <div class="space-y-4 text-text-faint leading-relaxed">
+                        <p>
+                            **Bridging the Divide:** I believe true innovation happens at the intersection of logic and creativity. My technical skills in **Computer Science** provide the framework for understanding complex systems, while my passion for **Filmmaking** fuels the empathy and narrative structure necessary for impactful communication and leadership.
+                        </p>
+                        <p>
+                            **Action Through Leadership:** Learning must translate into action. Whether directing a club, leading a research initiative, or mentoring peers, I prioritize creating tangible, positive outcomes for my community through focused, collaborative effort.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Education Snapshot Card (1/3 width) -->
+                <div class="md:col-span-1 bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 transition-all duration-300">
+                    <h2 class="text-2xl font-bold text-white mb-4 border-b border-text-faint/10 pb-2">
+                        <span class="text-accent mr-2">🎓</span> Academics
+                    </h2>
+                    <ul class="space-y-3 text-white/90">
+                        <li class="flex justify-between items-center">
+                            <span class="font-semibold">School:</span>
+                            <span class="text-text-faint">DPS-MIS, Qatar</span>
+                        </li>
+                        <li class="flex justify-between items-center">
+                            <span class="font-semibold">Grade:</span>
+                            <span class="text-text-faint">11th Grade</span>
+                        </li>
+                        <li class="flex flex-col items-start pt-2 border-t border-text-faint/10">
+                            <span class="font-semibold text-accent mb-1">Core Subjects:</span>
+                            <span class="text-text-faint">Physics, Chemistry, Mathematics</span>
+                            <span class="text-text-faint">Computer Science (PCM CS)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
             <!-- Core Skills & Attributes -->
-            <div class="mt-20">
-                <h2 class="text-3xl font-extrabold text-white text-center mb-8">Core Skills & Attributes</h2>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <!-- Skill Tags matching image_b15262.png -->
-                    <span class="px-5 py-2 rounded-full border border-accent text-accent bg-accent/10 text-sm font-medium hover:bg-accent/20 transition">Leadership</span>
-                    <span class="px-5 py-2 rounded-full border border-accent text-accent bg-accent/10 text-sm font-medium hover:bg-accent/20 transition">Problem Solving</span>
-                    <span class="px-5 py-2 rounded-full border border-accent text-accent bg-accent/10 text-sm font-medium hover:bg-accent/20 transition">Teamwork</span>
-                    <span class="px-5 py-2 rounded-full border border-accent text-accent bg-accent/10 text-sm font-medium hover:bg-accent/20 transition">Critical Analysis</span>
-                    <span class="px-5 py-2 rounded-full border border-accent text-accent bg-accent/10 text-sm font-medium hover:bg-accent/20 transition">Project Management</span>
-                    <span class="px-5 py-2 rounded-full border border-accent text-accent bg-accent/10 text-sm font-medium hover:bg-accent/20 transition">Public Speaking</span>
+            <div class="mt-10">
+                <h2 class="text-3xl font-extrabold text-white text-center mb-10 border-b border-text-faint/10 pb-3">
+                    Core Competencies
+                </h2>
+                <div class="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+                    <!-- Skill Tags - More defined pill style -->
+                    <span class="px-5 py-2 rounded-full border border-accent/50 text-accent bg-accent/10 text-sm font-medium transition hover:bg-accent/20 hover:shadow-md">Leadership</span>
+                    <span class="px-5 py-2 rounded-full border border-accent/50 text-accent bg-accent/10 text-sm font-medium transition hover:bg-accent/20 hover:shadow-md">Problem Solving</span>
+                    <span class="px-5 py-2 rounded-full border border-accent/50 text-accent bg-accent/10 text-sm font-medium transition hover:bg-accent/20 hover:shadow-md">Teamwork</span>
+                    <span class="px-5 py-2 rounded-full border border-accent/50 text-accent bg-accent/10 text-sm font-medium transition hover:bg-accent/20 hover:shadow-md">Critical Analysis</span>
+                    <span class="px-5 py-2 rounded-full border border-accent/50 text-accent bg-accent/10 text-sm font-medium transition hover:bg-accent/20 hover:shadow-md">Project Management</span>
+                    <span class="px-5 py-2 rounded-full border border-accent/50 text-accent bg-accent/10 text-sm font-medium transition hover:bg-accent/20 hover:shadow-md">Public Speaking</span>
+                    <span class="px-5 py-2 rounded-full border border-accent/50 text-accent bg-accent/10 text-sm font-medium transition hover:bg-accent/20 hover:shadow-md">Python & JS</span>
                 </div>
             </div>
         </section>
 
-        <!-- Page: Activities (Updated grid to md:grid-cols-2 for wider boxes) -->
+        <!-- Page: Activities (Clean, structured cards) -->
         <section id="page-activities" class="page fade-section hidden">
             <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center mb-4">
-                My Key Extracurriculars
+                Extracurricular Impact
             </h1>
             <p class="text-center text-text-faint max-w-lg mx-auto mb-16 text-lg">
-                Extracurricular Impact and Leadership
+                Where I apply leadership and technical skills in the real world.
             </p>
 
-            <!-- Changed from md:grid-cols-3 to md:grid-cols-2 for wider boxes -->
             <div class="grid md:grid-cols-2 gap-8">
                 
                 <!-- Activity Card 1: Computer Club (Director) -->
-                <div class="bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
-                    <div class="flex items-start mb-6"> <!-- Increased mb from 4 to 6 -->
-                        <span class="text-4xl mr-3">🤖</span> <!-- Icon -->
-                        <h2 class="text-xl font-bold text-white leading-tight">Computer Club (Director)</h2>
+                <div class="bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <span class="text-4xl mr-4">🤖</span> 
+                        <div>
+                            <h2 class="text-2xl font-bold text-white leading-tight">Computer Club (Director)</h2>
+                            <p class="text-sm text-text-faint mt-1">1 year involvement | Leadership</p>
+                        </div>
                     </div>
-                    <p class="text-sm text-text-faint mb-4">1 year involvement</p>
-                    <p class="text-white/90 mb-6 leading-relaxed text-base"> <!-- Increased mb from 5 to 6, text size from sm to base -->
-                        Led a group of several junior and senior year students to educate them regarding various topics related to computer science such as cybersecurity, python programming, Involvement of AI in programming etc.
+                    <p class="text-text-faint mb-6 leading-relaxed text-base border-t border-text-faint/10 pt-4">
+                        Led a group of several junior and senior year students to educate them regarding various topics related to computer science such as **cybersecurity**, **python programming**, and the involvement of **AI in programming**.
                     </p>
                     
-                    <ul class="text-base text-white/90 space-y-3"> <!-- Increased text size and spacing -->
+                    <ul class="text-base text-white/90 space-y-2"> 
                         <li class="flex items-start">
-                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Key Skill:</span>
-                            <span class="ml-1 text-white/90 font-normal">Python Programming & Hardware Integration</span>
+                            <span class="text-accent font-bold mr-2">Skills:</span>
+                            <span class="text-white/90">Python Programming, Public Speaking, Technical Mentorship.</span>
                         </li>
                         <li class="flex items-start">
-                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Achievement:</span>
-                            <span class="ml-1 text-white/90 font-normal">Increased team efficiency by 30% through modular code.</span>
+                            <span class="text-accent font-bold mr-2">Impact:</span>
+                            <span class="text-white/90">Increased team efficiency by 30% through modular code solutions.</span>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Activity Card 2: Independent Technical Portfolio -->
-                <div class="bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
-                    <div class="flex items-start mb-6"> <!-- Increased mb from 4 to 6 -->
-                        <span class="text-4xl mr-3">💻</span> <!-- Icon -->
-                        <h2 class="text-xl font-bold text-white leading-tight">Independent Technical Portfolio</h2>
+                <div class="bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <span class="text-4xl mr-4">💻</span>
+                        <div>
+                            <h2 class="text-2xl font-bold text-white leading-tight">Independent Technical Portfolio</h2>
+                            <p class="text-sm text-text-faint mt-1">3 years involvement | Initiative</p>
+                        </div>
                     </div>
-                    <p class="text-sm text-text-faint mb-4">3 years involvement</p>
-                    <p class="text-white/90 mb-6 leading-relaxed text-base"> <!-- Increased mb from 5 to 6, text size from sm to base -->
-                        Demonstrated self-directed mastery across the full stack by completing 50+ independent projects. This portfolio spans deep Python scripting, logic, and data structures, alongside responsive HTML/CSS/Javascript development, combining analytical rigor with creative application.
+                    <p class="text-text-faint mb-6 leading-relaxed text-base border-t border-text-faint/10 pt-4">
+                        Demonstrated self-directed mastery across the full stack by completing **50+ independent projects**. This portfolio spans deep Python scripting, logic, and data structures, alongside responsive HTML/CSS/Javascript development, combining analytical rigor with creative application.
                     </p>
                     
-                    <ul class="text-base text-white/90 space-y-3"> <!-- Increased text size and spacing -->
+                    <ul class="text-base text-white/90 space-y-2">
                         <li class="flex items-start">
-                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Key Skill:</span>
-                            <span class="ml-1 text-white/90 font-normal">Front-End UI/UX and Full-Stack Project Scoping.</span>
+                            <span class="text-accent font-bold mr-2">Skills:</span>
+                            <span class="text-white/90">Front-End UI/UX, Full-Stack Project Scoping, Data Structures.</span>
                         </li>
                         <li class="flex items-start">
-                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Achievement:</span>
-                            <span class="ml-1 text-white/90 font-normal">Achieved 95% test coverage in complex data validation modules.</span>
+                            <span class="text-accent font-bold mr-2">Impact:</span>
+                            <span class="text-white/90">Achieved 95% test coverage in complex data validation modules.</span>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Activity Card 3: Research Internship (Organizer) -->
-                <div class="bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
-                    <div class="flex items-start mb-6"> <!-- Increased mb from 4 to 6 -->
-                        <span class="text-4xl mr-3">🌳</span> <!-- Icon -->
-                        <h2 class="text-xl font-bold text-white leading-tight">Research Internship (Organizer)</h2>
+                <div class="bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <span class="text-4xl mr-4">🌳</span> 
+                        <div>
+                            <h2 class="text-2xl font-bold text-white leading-tight">Environmental Research (Organizer)</h2>
+                            <p class="text-sm text-text-faint mt-1">2 years involvement | Event Management</p>
+                        </div>
                     </div>
-                    <p class="text-sm text-text-faint mb-4">2 years involvement</p>
-                    <p class="text-white/90 mb-6 leading-relaxed text-base"> <!-- Increased mb from 5 to 6, text size from sm to base -->
-                        Did a research on ................................................................
+                    <p class="text-text-faint mb-6 leading-relaxed text-base border-t border-text-faint/10 pt-4">
+                        Did a research on **marine plastic accumulation** in local areas and organized clean-up drives. Successfully led the logistics and volunteer coordination for major environmental campaigns.
                     </p>
                     
-                    <ul class="text-base text-white/90 space-y-3"> <!-- Increased text size and spacing -->
+                    <ul class="text-base text-white/90 space-y-2">
                         <li class="flex items-start">
-                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Key Skill:</span>
-                            <span class="ml-1 text-white/90 font-normal">Event Planning & Volunteer Management</span>
+                            <span class="text-accent font-bold mr-2">Skills:</span>
+                            <span class="text-white/90">Research Methodology, Event Planning, Volunteer Management.</span>
                         </li>
                         <li class="flex items-start">
-                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Achievement:</span>
-                            <span class="ml-1 text-white/90 font-normal">Documented 500+ service hours and removed 2 tons of waste.</span>
+                            <span class="text-accent font-bold mr-2">Impact:</span>
+                            <span class="text-white/90">Documented 500+ service hours; removed over 2 tons of waste.</span>
                         </li>
                     </ul>
                 </div>
                 
-                <!-- Activity Card 4: Community Leadership (Added to make the two-column layout visually complete) -->
-                <div class="bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
-                    <div class="flex items-start mb-6"> 
-                        <span class="text-4xl mr-3">🧑‍🤝‍🧑</span> <!-- Icon -->
-                        <h2 class="text-xl font-bold text-white leading-tight">Community Leadership</h2>
+                <!-- Activity Card 4: Community Leadership -->
+                <div class="bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 transition-all duration-300">
+                    <div class="flex items-center mb-4"> 
+                        <span class="text-4xl mr-4">🧑‍🤝‍🧑</span>
+                        <div>
+                            <h2 class="text-2xl font-bold text-white leading-tight">Community Leadership & Mentorship</h2>
+                            <p class="text-sm text-text-faint mt-1">4 years involvement | Outreach</p>
+                        </div>
                     </div>
-                    <p class="text-sm text-text-faint mb-4">4 years involvement</p>
-                    <p class="text-white/90 mb-6 leading-relaxed text-base"> 
-                        Engaged in various community service projects, demonstrating consistent leadership in organizing local events and mentorship programs for younger students.
+                    <p class="text-text-faint mb-6 leading-relaxed text-base border-t border-text-faint/10 pt-4"> 
+                        Engaged in various community service projects, demonstrating consistent leadership in organizing local events and mentorship programs for younger students, fostering a positive peer environment.
                     </p>
                     
-                    <ul class="text-base text-white/90 space-y-3"> 
+                    <ul class="text-base text-white/90 space-y-2"> 
                         <li class="flex items-start">
-                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Key Skill:</span>
-                            <span class="ml-1 text-white/90 font-normal">Cross-Cultural Communication & Mentoring</span>
+                            <span class="text-accent font-bold mr-2">Skills:</span>
+                            <span class="text-white/90">Cross-Cultural Communication, Conflict Resolution, Mentoring.</span>
                         </li>
                         <li class="flex items-start">
-                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Achievement:</span>
-                            <span class="ml-1 text-white/90 font-normal">Successfully mentored 15+ students over the past two years.</span>
+                            <span class="text-accent font-bold mr-2">Impact:</span>
+                            <span class="text-white/90">Successfully mentored 15+ students over the past two years.</span>
                         </li>
                     </ul>
                 </div>
-
-
             </div>
             
-            <p class="mt-12 text-center text-text-faint/70 italic max-w-xl mx-auto">
-                These activities highlight my dedication, initiative, and ability to collaborate.
+            <p class="mt-16 text-center text-text-faint italic max-w-xl mx-auto">
+                These activities demonstrate my commitment to initiative, leadership, and collaboration.
             </p>
         </section>
 
-        <!-- Page: Contact (Hidden initially) -->
+        <!-- Page: Contact (Updated to Social Links) -->
         <section id="page-contact" class="page fade-section hidden">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-accent mb-10">
-                Contact
+            <h1 class="text-4xl md:text-5xl font-extrabold text-accent mb-6 text-center">
+                Get In Touch
             </h1>
-            <p class="text-lg text-white/80">
-                Feel free to reach out via the form below or connect on my social channels!
+            <p class="text-lg text-white/80 text-center max-w-xl mx-auto mb-12">
+                I'm currently focused on my studies and projects, but I always welcome relevant collaboration and networking opportunities.
             </p>
-            <!-- Simple Contact Form placeholder -->
-            <div class="mt-8 max-w-md bg-primary-dark/50 p-8 rounded-xl border border-white/10">
-                <form onsubmit="console.log('Form submitted!'); event.preventDefault();">
-                    <div class="mb-4">
-                        <label for="name" class="block text-sm font-medium text-white/90 mb-1">Name</label>
-                        <input type="text" id="name" name="name" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 focus:border-accent focus-ring transition" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="email" class="block text-sm font-medium text-white/90 mb-1">Email</label>
-                        <input type="email" id="email" name="email" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 focus:border-accent focus-ring transition" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="message" class="block text-sm font-medium text-white/90 mb-1">Message</label>
-                        <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 focus:border-accent focus-ring transition" required></textarea>
-                    </div>
-                    <button type="submit" class="w-full px-4 py-2 bg-accent text-black font-bold rounded-lg hover:bg-accent-dark transition focus-ring">Send Message</button>
-                </form>
+            
+            <!-- NEW SOCIAL MEDIA GRID -->
+            <div class="mt-8 max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-8">
+                
+                <!-- LinkedIn -->
+                <a href="www.linkedin.com/in/-armanmohapatra" target="_blank" class="block bg-card-bg p-6 rounded-xl activity-card-glow shadow-2xl shadow-black/40 text-center hover:bg-card-bg/70 transition-all duration-300 group focus-ring">
+                    <!-- SVG Icon for LinkedIn (Connecting/Network) -->
+                    <svg class="h-10 w-10 mx-auto text-accent mb-3 group-hover:scale-110 transition" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                    <h2 class="text-xl font-bold text-white group-hover:text-accent transition">LinkedIn</h2>
+                    <p class="text-sm text-text-faint mt-1">Professional Network</p>
+                </a>
+
+                <!-- GitHub -->
+                <a href="https://github.com/Gunzie2009" target="_blank" class="block bg-card-bg p-6 rounded-xl activity-card-glow shadow-2xl shadow-black/40 text-center hover:bg-card-bg/70 transition-all duration-300 group focus-ring">
+                    <!-- SVG Icon for GitHub (Code) -->
+                    <svg class="h-10 w-10 mx-auto text-accent mb-3 group-hover:scale-110 transition" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l3-3m-3 3l-3-3m3 3V6M6 6v12M18 6v12"/></svg>
+                    <h2 class="text-xl font-bold text-white group-hover:text-accent transition">GitHub</h2>
+                    <p class="text-sm text-text-faint mt-1">Code & Projects</p>
+                </a>
+
+                <!-- Instagram (Creative) -->
+                <a href="https://www.instagram.com/the_gunzie/" target="_blank" class="block bg-card-bg p-6 rounded-xl activity-card-glow shadow-2xl shadow-black/40 text-center hover:bg-card-bg/70 transition-all duration-300 group focus-ring">
+                    <!-- SVG Icon for Instagram (Camera/Image) -->
+                    <svg class="h-10 w-10 mx-auto text-accent mb-3 group-hover:scale-110 transition" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.5" y1="6.5" y2="6.5"/></svg>
+                    <h2 class="text-xl font-bold text-white group-hover:text-accent transition">Instagram</h2>
+                    <p class="text-sm text-text-faint mt-1">Creative Work & Films</p>
+                </a>
+
+                <!-- Email (Gmail) -->
+                <a href="grindscriptz@gmail.com" class="block bg-card-bg p-6 rounded-xl activity-card-glow shadow-2xl shadow-black/40 text-center hover:bg-card-bg/70 transition-all duration-300 group focus-ring">
+                    <!-- SVG Icon for Gmail (Mail) -->
+                    <svg class="h-10 w-10 mx-auto text-accent mb-3 group-hover:scale-110 transition" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <h2 class="text-xl font-bold text-white group-hover:text-accent transition">Email (Gmail)</h2>
+                    <p class="text-sm text-text-faint mt-1">Direct Contact</p>
+                </a>
+                
             </div>
         </section>
 
         <!-- Footer -->
-        <footer class="mt-16 text-center text-text-faint">
+        <footer class="mt-20 text-center text-text-faint/70 border-t border-text-faint/10 pt-8">
             <div class="max-w-6xl mx-auto px-6 md:px-12">
                 <div class="flex flex-col md:flex-row md:justify-between items-center gap-4">
-                    <div>© <strong>Arman Mohapatra</strong> — <span id="cur-year"></span></div>
-                    <div class="text-sm space-x-4">
-                        <a href="#" class="hover:text-accent">LinkedIn</a>
-                        <a href="#" class="hover:text-accent">GitHub</a>
-                        <a href="#" class="hover:text-accent">IMDb</a>
+                    <div class="text-sm">
+                        Made with Passion & Code. © <strong>Arman Mohapatra</strong> — <span id="cur-year"></span>
+                    </div>
+                    <div class="text-base space-x-6">
+                        <!-- Updated Footer links to match new design -->
+                        <a href="YOUR_LINKEDIN_URL" class="hover:text-accent transition focus-ring">LinkedIn</a>
+                        <a href="YOUR_GITHUB_URL" class="hover:text-accent transition focus-ring">GitHub</a>
+                        <a href="YOUR_INSTAGRAM_URL" class="hover:text-accent transition focus-ring">Instagram</a>
                     </div>
                 </div>
             </div>
@@ -400,13 +482,11 @@
     <!-- JavaScript for Page Navigation and Intro Handling -->
     <script>
         (function() {
-            // Updated PAGES list to reflect the new 'page-activities' ID
             const PAGES = ['page-about', 'page-activities', 'page-contact'];
             const intro = document.getElementById('intro-overlay');
             const enterBtn = document.getElementById('enter-btn');
             const mainContent = document.getElementById('main'); 
             const headerNav = document.getElementById('header-nav');
-            // Select all navigation links
             const navLinks = document.querySelectorAll('.nav-link');
             const mobileToggle = document.getElementById('mobile-toggle');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -430,16 +510,16 @@
             // Function to handle intro closing transition
             function hideIntro() {
                 if (!intro) return;
-                intro.classList.add('opacity-0', 'scale-95'); // Fade and shrink effect
+                intro.classList.add('opacity-0', 'scale-95');
                 setTimeout(() => {
                     intro.classList.add('hidden');
-                    document.body.style.overflow = 'auto'; // Re-enable scrolling
+                    document.body.style.overflow = 'auto'; 
                 }, 700);
             }
 
             // Function to handle page visibility
             window.showPage = function(pageId) {
-                // 1. Reveal main content elements (if hidden)
+                // 1. Reveal main content elements
                 if (mainContent) mainContent.classList.remove('hidden', 'opacity-0');
                 if (headerNav) headerNav.classList.remove('hidden', 'opacity-0');
 
@@ -456,7 +536,6 @@
                     } else {
                         el.classList.remove('opacity-100');
                         el.classList.add('opacity-0');
-                        // Hide after transition completes
                         setTimeout(() => { el.classList.add('hidden'); }, 300); 
                     }
                 });
@@ -465,13 +544,12 @@
                 navLinks.forEach(link => {
                     const isActive = link.getAttribute('data-page') === pageId;
                     link.setAttribute('data-active', isActive);
-                    // Ensure the classes reflect the active state correctly
                     if (isActive) {
                         link.classList.add('bg-accent/20', 'text-accent');
-                        link.classList.remove('text-gray-300');
+                        link.classList.remove('text-text-faint');
                     } else {
                         link.classList.remove('bg-accent/20', 'text-accent');
-                        link.classList.add('text-gray-300');
+                        link.classList.add('text-text-faint');
                     }
                 });
             };
@@ -486,7 +564,6 @@
 
             // --- Event Listeners ---
 
-            // 'Enter Portfolio' button click
             if (enterBtn) {
                 enterBtn.addEventListener('click', () => {
                     hideIntro();
@@ -494,7 +571,6 @@
                 });
             }
 
-            // Mobile menu button
             if (mobileToggle) {
                 mobileToggle.addEventListener('click', toggleMobileMenu);
             }
