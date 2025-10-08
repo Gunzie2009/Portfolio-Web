@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -30,16 +30,16 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-        /* 1. DOT PATTERN BACKGROUND (Reduced Visibility) */
+        /* 1. DOT PATTERN BACKGROUND (Increased Visibility to 0.20) */
         .dot-pattern {
-            /* Reduced opacity from 0.25 to 0.08 */
+            /* Increased opacity from 0.08 to 0.20 for higher visibility */
             background-image:
-                radial-gradient(circle, rgba(255,255,255,0.15) 2px, rgba(255,255,255,0) 2px);
+                radial-gradient(circle, rgba(255,255,255,0.20) 2px, rgba(255,255,255,0) 2px);
             background-size: 60px 60px;
             background-color: #000000;
         }
 
-        /* 3. BLUE GLOW EFFECT ON THE BOX BORDER */
+        /* 3. BLUE GLOW EFFECT ON THE BOX BORDER (NOW STRONGER) */
         .glow-outline {
             position: relative;
             border-radius: 1rem;
@@ -47,11 +47,12 @@
         .glow-outline::before {
             content: "";
             position: absolute;
-            inset: -8px; /* Slightly larger inset for better glow visibility */
+            inset: -15px; /* Increased inset from -8px for wider glow */
             border-radius: 1.25rem;
-            background: linear-gradient(90deg, rgba(56,189,248,0.2), rgba(14,165,233,0.1));
+            /* Increased gradient opacity for a brighter glow */
+            background: linear-gradient(90deg, rgba(56,189,248,0.5), rgba(14,165,233,0.3)); 
             z-index: -1;
-            filter: blur(12px); /* Increased blur for softer glow */
+            filter: blur(20px); /* Increased blur from 12px for stronger glow */
             opacity: 1;
             transition: opacity 0.3s ease;
         }
@@ -115,8 +116,8 @@
         <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center text-white text-2xl md:text-3xl font-bold bg-accent shadow-2xl shadow-accent/40 mb-12">
             Arman
         </div>
-        <!-- Welcome Box (Increased vertical padding from py-10 to py-16) -->
-        <div class="max-w-xl w-full mx-6 py-16 px-10 md:px-12 text-center rounded-2xl bg-primary-dark/90 glow-outline transition-all duration-300">
+        <!-- Welcome Box (Background changed to dark blue card-bg, glow-outline is applied) -->
+        <div class="max-w-xl w-full mx-6 py-16 px-10 md:px-12 text-center rounded-2xl bg-card-bg/95 glow-outline transition-all duration-300">
             <h1 class="text-5xl md:text-6xl font-extrabold text-accent">
                 WELCOME
             </h1>
@@ -209,7 +210,7 @@
                         <p class="text-lg text-accent font-semibold mb-6 hidden md:block">Arman Mohapatra's Portfolio</p>
 
                         <p class="text-white/90 text-lg leading-relaxed mb-8">
-                            I'm **Arman Mohapatra**, an 11th-grade student at DPS-MIS, Qatar, currently focused on Physics, Chemistry, Mathematics, and Computer Science (PCM CS). While I possess an active interest in <strong class="text-accent">coding</strong> and appreciate its power in solving complex problems through technology, my true aspiration lies in becoming a <strong class="text-accent">filmmaker</strong>. This seemingly unconventional path is balanced by a deep respect for learning, ensuring I prioritize academics. Complementing these pursuits, <strong class="text-accent">writing</strong> serves as a vital creative outlet, and I enjoy moments of relaxation through games like <strong class="text-accent">badminton and chess</strong>. This blend reflects a drive for both analytical rigor and creative expression.
+                            I'm Arman Mohapatra, an 11th-grade student at DPS-MIS, Qatar, currently focused on Physics, Chemistry, Mathematics, and Computer Science (PCM CS). While I possess an active interest in <strong class="text-accent">coding</strong> and appreciate its power in solving complex problems through technology, my true aspiration lies in becoming a <strong class="text-accent">filmmaker</strong>. This seemingly unconventional path is balanced by a deep respect for learning, ensuring I prioritize academics. Complementing these pursuits, <strong class="text-accent">writing</strong> serves as a vital creative outlet, and I enjoy moments of relaxation through games like <strong class="text-accent">badminton and chess</strong>. This blend reflects a drive for both analytical rigor and creative expression.
                         </p>
                         <button onclick="showPage('page-activities');" class="px-6 py-3 rounded-lg bg-accent text-black font-semibold text-lg hover:bg-accent-dark transition focus-ring shadow-xl shadow-accent/30">
                             View My Activities
@@ -507,3 +508,5 @@
     </script>
 </body>
 </html>
+
+
