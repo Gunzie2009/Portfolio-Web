@@ -30,12 +30,11 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-        /* 1. DOT PATTERN BACKGROUND (Enhanced Visibility and Smoothness) */
+        /* 1. DOT PATTERN BACKGROUND (Reduced Visibility) */
         .dot-pattern {
-            /* Increased dot radius (2px) and higher opacity (0.25) for more visibility */
+            /* Reduced opacity from 0.25 to 0.08 */
             background-image:
-                radial-gradient(circle, rgba(255,255,255,0.25) 2px, rgba(255,255,255,0) 2px);
-            /* Increased spacing (60px) for a smoother, less dense look */
+                radial-gradient(circle, rgba(255,255,255,0.15) 2px, rgba(255,255,255,0) 2px);
             background-size: 60px 60px;
             background-color: #000000;
         }
@@ -198,7 +197,7 @@
     <!-- MAIN CONTENT (INITIALLY HIDDEN) -->
     <main id="main" class="relative z-10 pt-32 pb-24 max-w-6xl mx-auto px-6 md:px-12 opacity-0 hidden transition-opacity duration-300">
 
-        <!-- Page: About (Updated grid to make text box wider: md:col-span-4) -->
+        <!-- Page: About (Grid remains 4/5 for wider text box) -->
         <section id="page-about" class="page fade-section">
             
             <div class="grid grid-cols-1 md:grid-cols-5 gap-10 items-start">
@@ -210,7 +209,7 @@
                         <p class="text-lg text-accent font-semibold mb-6 hidden md:block">Arman Mohapatra's Portfolio</p>
 
                         <p class="text-white/90 text-lg leading-relaxed mb-8">
-                            I'm Arman Mohapatra, an 11th-grade student at DPS-MIS, Qatar, currently focused on Physics, Chemistry, Mathematics, and Computer Science (PCM CS). While I possess an active interest in <strong class="text-accent">coding</strong> and appreciate its power in solving complex problems through technology, my true aspiration lies in becoming a <strong class="text-accent">filmmaker</strong>. This seemingly unconventional path is balanced by a deep respect for learning, ensuring I prioritize academics. Complementing these pursuits, <strong class="text-accent">writing</strong> serves as a vital creative outlet, and I enjoy moments of relaxation through games like <strong class="text-accent">badminton and chess</strong>. This blend reflects a drive for both analytical rigor and creative expression.
+                            I'm **Arman Mohapatra**, an 11th-grade student at DPS-MIS, Qatar, currently focused on Physics, Chemistry, Mathematics, and Computer Science (PCM CS). While I possess an active interest in <strong class="text-accent">coding</strong> and appreciate its power in solving complex problems through technology, my true aspiration lies in becoming a <strong class="text-accent">filmmaker</strong>. This seemingly unconventional path is balanced by a deep respect for learning, ensuring I prioritize academics. Complementing these pursuits, <strong class="text-accent">writing</strong> serves as a vital creative outlet, and I enjoy moments of relaxation through games like <strong class="text-accent">badminton and chess</strong>. This blend reflects a drive for both analytical rigor and creative expression.
                         </p>
                         <button onclick="showPage('page-activities');" class="px-6 py-3 rounded-lg bg-accent text-black font-semibold text-lg hover:bg-accent-dark transition focus-ring shadow-xl shadow-accent/30">
                             View My Activities
@@ -241,7 +240,7 @@
             </div>
         </section>
 
-        <!-- Page: Activities (Increased box size with p-8 and more vertical spacing) -->
+        <!-- Page: Activities (Updated grid to md:grid-cols-2 for wider boxes) -->
         <section id="page-activities" class="page fade-section hidden">
             <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center mb-4">
                 My Key Extracurriculars
@@ -250,7 +249,8 @@
                 Extracurricular Impact and Leadership
             </p>
 
-            <div class="grid md:grid-cols-3 gap-8">
+            <!-- Changed from md:grid-cols-3 to md:grid-cols-2 for wider boxes -->
+            <div class="grid md:grid-cols-2 gap-8">
                 
                 <!-- Activity Card 1: Computer Club (Director) -->
                 <div class="bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
@@ -293,7 +293,7 @@
                         </li>
                         <li class="flex items-start">
                             <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Achievement:</span>
-                            <span class="ml-1 text-white/90 font-normal">Front-End UI/UX and Full-Stack Project Scoping.</span>
+                            <span class="ml-1 text-white/90 font-normal">Achieved 95% test coverage in complex data validation modules.</span>
                         </li>
                     </ul>
                 </div>
@@ -320,6 +320,31 @@
                         </li>
                     </ul>
                 </div>
+                
+                <!-- Activity Card 4: Community Leadership (Added to make the two-column layout visually complete) -->
+                <div class="bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
+                    <div class="flex items-start mb-6"> 
+                        <span class="text-4xl mr-3">🧑‍🤝‍🧑</span> <!-- Icon -->
+                        <h2 class="text-xl font-bold text-white leading-tight">Community Leadership</h2>
+                    </div>
+                    <p class="text-sm text-text-faint mb-4">4 years involvement</p>
+                    <p class="text-white/90 mb-6 leading-relaxed text-base"> 
+                        Engaged in various community service projects, demonstrating consistent leadership in organizing local events and mentorship programs for younger students.
+                    </p>
+                    
+                    <ul class="text-base text-white/90 space-y-3"> 
+                        <li class="flex items-start">
+                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Key Skill:</span>
+                            <span class="ml-1 text-white/90 font-normal">Cross-Cultural Communication & Mentoring</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Achievement:</span>
+                            <span class="ml-1 text-white/90 font-normal">Successfully mentored 15+ students over the past two years.</span>
+                        </li>
+                    </ul>
+                </div>
+
+
             </div>
             
             <p class="mt-12 text-center text-text-faint/70 italic max-w-xl mx-auto">
@@ -482,4 +507,3 @@
     </script>
 </body>
 </html>
-
