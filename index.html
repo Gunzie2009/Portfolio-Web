@@ -198,14 +198,14 @@
     <!-- MAIN CONTENT (INITIALLY HIDDEN) -->
     <main id="main" class="relative z-10 pt-32 pb-24 max-w-6xl mx-auto px-6 md:px-12 opacity-0 hidden transition-opacity duration-300">
 
-        <!-- Page: About (Updated to match image_b15262.png) -->
+        <!-- Page: About (Updated grid to make text box wider: md:col-span-4) -->
         <section id="page-about" class="page fade-section">
             
             <div class="grid grid-cols-1 md:grid-cols-5 gap-10 items-start">
-                <div class="md:col-span-3">
-                    <!-- NEW BOX WRAPPER ADDED HERE -->
+                <!-- Text Box now takes 4 columns on medium/large screens -->
+                <div class="md:col-span-4">
                     <div class="bg-card-bg p-6 md:p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40">
-                        <!-- Title and Subtitle from image header -->
+                        <!-- Title and Subtitle -->
                         <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2">About Me</h1>
                         <p class="text-lg text-accent font-semibold mb-6 hidden md:block">Arman Mohapatra's Portfolio</p>
 
@@ -216,9 +216,9 @@
                             View My Activities
                         </button>
                     </div>
-                    <!-- END OF NEW BOX WRAPPER -->
                 </div>
-                <div class="md:col-span-2 flex justify-center md:justify-end">
+                <!-- Avatar now takes 1 column on medium/large screens -->
+                <div class="md:col-span-1 flex justify-center md:justify-end">
                     <!-- Circular Avatar with A.M -->
                     <div class="w-48 h-48 rounded-full bg-accent flex items-center justify-center text-primary-dark font-bold text-5xl border-[10px] border-accent/30 shadow-2xl shadow-accent/40">
                         A.M
@@ -241,7 +241,7 @@
             </div>
         </section>
 
-        <!-- Page: Activities (Updated with longer boxes) -->
+        <!-- Page: Activities (Increased box size with p-8 and more vertical spacing) -->
         <section id="page-activities" class="page fade-section hidden">
             <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center mb-4">
                 My Key Extracurriculars
@@ -253,17 +253,17 @@
             <div class="grid md:grid-cols-3 gap-8">
                 
                 <!-- Activity Card 1: Computer Club (Director) -->
-                <div class="bg-card-bg p-6 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
-                    <div class="flex items-start mb-4">
+                <div class="bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
+                    <div class="flex items-start mb-6"> <!-- Increased mb from 4 to 6 -->
                         <span class="text-4xl mr-3">🤖</span> <!-- Icon -->
                         <h2 class="text-xl font-bold text-white leading-tight">Computer Club (Director)</h2>
                     </div>
                     <p class="text-sm text-text-faint mb-4">1 year involvement</p>
-                    <p class="text-white/90 mb-5 leading-relaxed text-sm">
+                    <p class="text-white/90 mb-6 leading-relaxed text-base"> <!-- Increased mb from 5 to 6, text size from sm to base -->
                         Led a group of several junior and senior year students to educate them regarding various topics related to computer science such as cybersecurity, python programming, Involvement of AI in programming etc.
                     </p>
                     
-                    <ul class="text-sm text-white/90 space-y-2">
+                    <ul class="text-base text-white/90 space-y-3"> <!-- Increased text size and spacing -->
                         <li class="flex items-start">
                             <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Key Skill:</span>
                             <span class="ml-1 text-white/90 font-normal">Python Programming & Hardware Integration</span>
@@ -276,17 +276,17 @@
                 </div>
 
                 <!-- Activity Card 2: Independent Technical Portfolio -->
-                <div class="bg-card-bg p-6 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
-                    <div class="flex items-start mb-4">
+                <div class="bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
+                    <div class="flex items-start mb-6"> <!-- Increased mb from 4 to 6 -->
                         <span class="text-4xl mr-3">💻</span> <!-- Icon -->
                         <h2 class="text-xl font-bold text-white leading-tight">Independent Technical Portfolio</h2>
                     </div>
                     <p class="text-sm text-text-faint mb-4">3 years involvement</p>
-                    <p class="text-white/90 mb-5 leading-relaxed text-sm">
+                    <p class="text-white/90 mb-6 leading-relaxed text-base"> <!-- Increased mb from 5 to 6, text size from sm to base -->
                         Demonstrated self-directed mastery across the full stack by completing 50+ independent projects. This portfolio spans deep Python scripting, logic, and data structures, alongside responsive HTML/CSS/Javascript development, combining analytical rigor with creative application.
                     </p>
                     
-                    <ul class="text-sm text-white/90 space-y-2">
+                    <ul class="text-base text-white/90 space-y-3"> <!-- Increased text size and spacing -->
                         <li class="flex items-start">
                             <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Key Skill:</span>
                             <span class="ml-1 text-white/90 font-normal">Front-End UI/UX and Full-Stack Project Scoping.</span>
@@ -299,17 +299,17 @@
                 </div>
 
                 <!-- Activity Card 3: Research Internship (Organizer) -->
-                <div class="bg-card-bg p-6 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
-                    <div class="flex items-start mb-4">
+                <div class="bg-card-bg p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
+                    <div class="flex items-start mb-6"> <!-- Increased mb from 4 to 6 -->
                         <span class="text-4xl mr-3">🌳</span> <!-- Icon -->
                         <h2 class="text-xl font-bold text-white leading-tight">Research Internship (Organizer)</h2>
                     </div>
                     <p class="text-sm text-text-faint mb-4">2 years involvement</p>
-                    <p class="text-white/90 mb-5 leading-relaxed text-sm">
+                    <p class="text-white/90 mb-6 leading-relaxed text-base"> <!-- Increased mb from 5 to 6, text size from sm to base -->
                         Did a research on ................................................................
                     </p>
                     
-                    <ul class="text-sm text-white/90 space-y-2">
+                    <ul class="text-base text-white/90 space-y-3"> <!-- Increased text size and spacing -->
                         <li class="flex items-start">
                             <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Key Skill:</span>
                             <span class="ml-1 text-white/90 font-normal">Event Planning & Volunteer Management</span>
