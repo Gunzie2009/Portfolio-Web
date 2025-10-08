@@ -1,385 +1,484 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio: Extracurriculars and Achievements</title>
-    <!-- Load Tailwind CSS -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Arman Mohapatra — Portfolio</title>
+
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configure Tailwind for custom colors and font -->
     <script>
+        /* Tailwind theme extension for colors and fonts */
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'primary-dark': '#1e293b', // Slate-800 equivalent (for card backgrounds)
-                        'secondary-dark': '#050505', // Near-Black background
-                        'accent': '#38bdf8', // Sky-400 (Blue accent)
-                        'accent-dark': '#0ea5e9', // Sky-500 (Darker Blue accent)
+                        'primary-dark': '#0b0b0b',
+                        'card-bg': '#121827', /* New distinct dark blue for activity cards */
+                        'accent': '#38bdf8', /* Sky Blue */
+                        'accent-dark': '#0ea5e9',
+                        'text-faint': '#94a3b8' /* Slate Gray */
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
+                    }
                 }
             }
-        }
-
-        // --- Routing and Navigation Logic ---
-
-        // Function to show a specific content page and hide others
-        function showPage(pageId) {
-            // Array of all page IDs
-            const allPages = ['page-about', 'page-activities', 'page-contact'];
-            
-            allPages.forEach(id => {
-                const page = document.getElementById(id);
-                if (page) {
-                    // Hide all pages
-                    page.style.display = 'none';
-                }
-            });
-
-            // Show the requested page
-            const requestedPage = document.getElementById(pageId);
-            if (requestedPage) {
-                requestedPage.style.display = 'block';
-            }
-
-            // Update active state in navigation links
-            document.querySelectorAll('#main-nav a').forEach(link => {
-                if (link.getAttribute('data-page') === pageId) {
-                    // Active style
-                    link.classList.remove('text-gray-400', 'hover:text-accent');
-                    link.classList.add('text-accent', 'border-b-2', 'border-accent', 'font-semibold');
-                } else {
-                    // Inactive style
-                    link.classList.add('text-gray-400', 'hover:text-accent');
-                    link.classList.remove('text-accent', 'border-b-2', 'border-accent', 'font-semibold');
-                }
-            });
-        }
-
-        // Function to handle hiding the full-screen intro page
-        function hideIntro() {
-            const overlay = document.getElementById('intro-overlay');
-            overlay.style.opacity = '0';
-            
-            // Hide the element completely and show the first page after transition ends
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                document.body.style.overflow = 'auto'; // Re-enable scrolling on the main page
-                showPage('page-about'); // Show the default 'About' page
-            }, 1000); 
-        }
-
-        // Initial setup on document load
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initially disable scrolling until the intro page is dismissed
-            document.body.style.overflow = 'hidden';
-            
-            // Hide all content pages initially so only the intro overlay is visible
-            showPage('page-about'); 
-            document.getElementById('page-about').style.display = 'none';
-        });
-
+        };
     </script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        
-        /* Animation for subtle glow/pulse effect on the WELCOME text */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-        /* Applied to the WELCOME text for the primary page background glow */
-        .animate-text-pulse {
-            animation: pulse 2s ease-in-out infinite;
+
+        /* 1. DOT PATTERN BACKGROUND (Enhanced Visibility and Smoothness) */
+        .dot-pattern {
+            /* Increased dot radius (2px) and higher opacity (0.25) for more visibility */
+            background-image:
+                radial-gradient(circle, rgba(255,255,255,0.25) 2px, rgba(255,255,255,0) 2px);
+            /* Increased spacing (60px) for a smoother, less dense look */
+            background-size: 60px 60px;
+            background-color: #000000;
         }
 
-        /* --- Custom CSS for Dot Pattern Background (FULL PAGE SUBTLE) --- */
-        .dot-pattern-background {
-            /* 1. Create the repeating dot pattern using a radial gradient background (Increased opacity to 0.25) */
-            background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.25) 1px, transparent 0); 
-            background-size: 40px 40px; 
-            
-            /* 2. Apply a large radial mask to fade the dots towards the very edge of the viewport */
-            mask-image: radial-gradient(1200px circle at center, white, transparent);
-            -webkit-mask-image: radial-gradient(1200px circle at center, white, transparent);
-        }
-
-        /* Glow Animation applied to the full background layer (Increased intensity) */
-        @keyframes pulse-glow-page {
-            /* Increased min opacity from 0.05 to 0.1 */
-            0%, 100% { box-shadow: 0 0 40px 5px rgba(255, 255, 255, 0.1); } 
-            /* Increased max opacity from 0.1 to 0.2 */
-            50% { box-shadow: 0 0 70px 10px rgba(255, 255, 255, 0.2); }
-        }
-        .animate-subtle-glow-page {
-            animation: pulse-glow-page 4s ease-in-out infinite;
-        }
-        
-        /* --- Style for the Central Glow Box (No Internal Dots) --- */
-        .centered-glow-outline {
+        /* 3. BLUE GLOW EFFECT ON THE BOX BORDER */
+        .glow-outline {
             position: relative;
-            /* Max width to ensure it doesn't span the whole screen unnecessarily */
-            max-width: 800px; 
-            /* This padding creates the space between the content and the glowing frame border */
-            padding: 2rem; 
+            border-radius: 1rem;
+        }
+        .glow-outline::before {
+            content: "";
+            position: absolute;
+            inset: -8px; /* Slightly larger inset for better glow visibility */
+            border-radius: 1.25rem;
+            background: linear-gradient(90deg, rgba(56,189,248,0.2), rgba(14,165,233,0.1));
+            z-index: -1;
+            filter: blur(12px); /* Increased blur for softer glow */
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        .glow-outline:hover::before {
+             opacity: 0.9;
         }
 
-        /* Pseudo-element to create the glowing outline/background without dots */
-        .centered-glow-outline::before {
-            content: '';
+        /* CARD GLOW/BORDER FOR ACTIVITIES and new About box */
+        .activity-card-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        .activity-card-glow::before {
+            content: "";
             position: absolute;
-            /* Inset to 0 so the pseudo-element fills the entire parent container */
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            
-            /* IMPORTANT CHANGE: Use a fully opaque background color (#0F172A is Slate-900) 
-               to completely mask the dot pattern behind this box. 
-            */
-            background-color: #0F172A; 
-            
-            /* Brighter, more visible blue frame */
-            border: 2px solid rgba(56, 189, 248, 0.5); 
-            border-radius: 1.5rem;
-            pointer-events: none; /* Ensure it doesn't block clicks */
-            z-index: -1; /* Keep it behind the text */
-
-            /* Apply the intense blue glow animation */
-            animation: pulse-glow-outline 4s ease-in-out infinite;
+            border-radius: 0.75rem; /* Matches rounded-xl */
+            padding: 2px; /* Thickness of the visible border/glow */
+            background: linear-gradient(135deg, rgba(56,189,248, 0.4) 0%, rgba(14,165,233, 0.1) 100%);
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: 0; /* Ensures it is behind content but above card background */
+            pointer-events: none;
+            transition: all 0.3s ease;
         }
-        /* --- End Style for the Central Glow Box --- */
-
-
-        /* Define the new outline glow animation (Blue glow matching the accent color) */
-        @keyframes pulse-glow-outline {
-            0%, 100% { box-shadow: 0 0 50px 10px rgba(56, 189, 248, 0.3); } 
-            50% { box-shadow: 0 0 80px 20px rgba(56, 189, 248, 0.5); }
+        /* Hover effect - makes the glow stronger */
+        .activity-card-glow:hover::before {
+            background: linear-gradient(135deg, rgba(56,189,248, 0.7) 0%, rgba(14,165,233, 0.2) 100%);
         }
+
+        /* Sublte animation for the main page background */
+        @keyframes subtle-glow {
+            0%, 100% { box-shadow: 0 0 30px rgba(56,189,248,0.03); }
+            50% { box-shadow: 0 0 80px rgba(56,189,248,0.06); }
+        }
+        .page-glow { animation: subtle-glow 6s ease-in-out infinite; }
+        
+        /* Focus ring for accessibility */
+        .focus-ring:focus { outline: 3px solid rgba(56,189,248,0.18); outline-offset: 2px; }
+
     </style>
 </head>
-<body class="bg-secondary-dark text-white font-sans min-h-screen antialiased relative">
+<body class="dot-pattern min-h-screen text-white font-sans antialiased relative">
+    
+    <!-- BACKGROUND LAYER: subtle blur/glow overlay for depth -->
+    <div aria-hidden="true" class="fixed inset-0 z-0 page-glow"></div>
 
-    <!-- NEW: Fixed Dot Pattern Background Layer (Below all content, Z-0, now moderately subtle) -->
-    <div class="dot-pattern-background fixed inset-0 z-0 animate-subtle-glow-page"></div>
-
-    <!-- Full-Screen Intro Page (1 of 4) -->
-    <div id="intro-overlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-secondary-dark transition-opacity duration-1000 opacity-100">
-        
-        <!-- Photo Placeholder -->
-        <img src="https://placehold.co/200x200/38bdf8/0f172a?text=Arman" 
-              alt="Profile photo of Arman Mohapatra" 
-              class="w-48 h-48 object-cover rounded-full border-4 border-accent shadow-2xl mb-10 transform hover:scale-105 transition duration-500">
-
-        <!-- Central Text Wrapper with Glowing Outline (NO INTERNAL DOTS). Added my-10 for separation. -->
-        <div class="centered-glow-outline text-center my-10">
-        
-            <!-- WELCOME Text (NO BOX) -->
-            <h1 class="text-6xl sm:text-7xl font-extrabold text-accent tracking-tight animate-text-pulse mb-6 relative z-10">WELCOME</h1>
-            
-            <!-- Symbols Container (NO BOX, using inline-block to shrink width) -->
-            <div class="inline-block p-4 mb-6">
-                <!-- Interest Symbols - Visually engaging row of interests -->
-                <div class="flex space-x-6 sm:space-x-10 text-4xl sm:text-5xl relative z-10">
-                    <!-- Coding -->
-                    <span title="Coding/Technology" class="text-gray-300 hover:text-accent transition duration-300 transform hover:scale-110">💻</span>
-                    <!-- Filmmaking -->
-                    <span title="Filmmaking" class="text-gray-300 hover:text-accent transition duration-300 transform hover:scale-110">🎬</span>
-                    <!-- Writing -->
-                    <span title="Creative Writing" class="text-gray-300 hover:text-accent transition duration-300 transform hover:scale-110">✍️</span>
-                    <!-- Sports (Badminton/Chess) -->
-                    <span title="Badminton/Sports" class="text-gray-300 hover:text-accent transition duration-300 transform hover:scale-110">🏸</span>
-                    <!-- Social/Community Activities -->
-                    <span title="Social Activities/Leadership" class="text-gray-300 hover:text-accent transition duration-300 transform hover:scale-110">🤝</span>
-                </div>
-            </div>
-            
-            <!-- Text Content (NO BOX) -->
-            <div class="text-center max-w-3xl px-6">
-                <!-- Intro Line 1 -->
-                <p class="text-xl sm:text-2xl text-gray-300 mb-2 relative z-10">
-                    A student, aspiring <strong class="text-accent">Filmmaker</strong>, and dedicated member of my community.
-                </p>
-                <!-- Intro Line 2 -->
-                <p class="text-lg sm:text-xl text-gray-400 relative z-10">
-                    My passion lies in applying critical thinking and leadership skills gained through extracurriculars to real-world challenges.
-                </p>
-            </div>
-
+    <!-- 2. INTRO OVERLAY: Perfectly Centered Welcome Screen -->
+    <div id="intro-overlay"
+        class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/95 transition-all duration-700">
+        <!-- Avatar Circle (Enlarged to w-32/h-32) -->
+        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full flex items-center justify-center text-white text-2xl md:text-3xl font-bold bg-accent shadow-2xl shadow-accent/40 mb-12">
+            Arman
         </div>
+        <!-- Welcome Box (Increased vertical padding from py-10 to py-16) -->
+        <div class="max-w-xl w-full mx-6 py-16 px-10 md:px-12 text-center rounded-2xl bg-primary-dark/90 glow-outline transition-all duration-300">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-accent">
+                WELCOME
+            </h1>
 
-        <button onclick="hideIntro()" class="px-8 py-4 bg-accent text-secondary-dark font-bold text-lg rounded-xl hover:bg-accent-dark transition duration-300 shadow-xl transform hover:scale-105">
-            Enter Portfolio
-        </button>
-    </div>
-
-    <!-- Main Content Container (Portfolio after Intro) -->
-    <!-- Content now has z-10 to ensure it layers above the background pattern -->
-    <div class="container mx-auto p-4 sm:p-8 max-w-7xl relative z-10">
-
-        <!-- Header/Navigation -->
-        <header class="py-6 border-b border-primary-dark mb-10 flex flex-col sm:flex-row justify-between items-center">
-            <div>
-                <h1 class="text-3xl font-extrabold text-accent tracking-tight">
-                    Arman Mohapatra's Portfolio
-                </h1>
-                <p class="text-sm text-gray-400 mt-1">Extracurricular Impact and Leadership</p>
+            <div class="mt-4 text-3xl space-x-4">
+                <span>💻</span>
+                <span>🎬</span>
+                <span>✍️</span>
+                <span>🎤</span>
+                <span>🥊</span>
             </div>
-            
-            <!-- Navigation Links -->
-            <nav id="main-nav" class="mt-4 sm:mt-0 flex space-x-6 text-lg">
-                <!-- Using data-page attributes for JavaScript routing -->
-                <a href="#" onclick="showPage('page-about')" data-page="page-about" class="pb-1 transition duration-200">
-                    About
-                </a>
-                <a href="#" onclick="showPage('page-activities')" data-page="page-activities" class="pb-1 transition duration-200 text-gray-400 hover:text-accent">
-                    Activities
-                </a>
-                <a href="#" onclick="showPage('page-contact')" data-page="page-contact" class="pb-1 transition duration-200 text-gray-400 hover:text-accent">
-                    Contact
-                </a>
-            </nav>
-        </header>
 
-        <!-- 2. About Page (Page 2 of 4) - Combines Hero and Skills -->
-        <div id="page-about" style="display: none;">
-            <!-- Hero / Introduction Section -->
-            <section class="grid md:grid-cols-3 gap-8 items-center mb-12 bg-primary-dark/80 backdrop-blur-sm p-6 rounded-xl shadow-2xl">
-                <div class="md:col-span-2">
-                    <h2 class="text-4xl sm:text-5xl font-bold mb-4">About Me</h2>
-                    <p class="text-xl text-gray-300 mb-6">
-                        I'm Arman Mohapatra, an 11th-grade student at DPS-MIS, Qatar, currently focused on Physics, Chemistry, Mathematics, and Computer Science (PCM CS). While I possess an active interest in <strong>coding</strong> and appreciate its power in solving complex problems through technology, my true aspiration lies in becoming a <strong>filmmaker</strong>. This seemingly unconventional path is balanced by a deep respect for learning, ensuring I prioritize academics. Complementing these pursuits, <strong>writing</strong> serves as a vital creative outlet, and I enjoy moments of relaxation through games like <strong>badminton</strong> and <strong>chess</strong>. This blend reflects a drive for both analytical rigor and creative expression.
-                    </p>
-                    <div class="flex flex-wrap gap-4">
-                        <button onclick="showPage('page-activities')" class="px-6 py-3 bg-accent text-secondary-dark font-semibold rounded-full hover:bg-accent-dark transition duration-300 shadow-lg">
+            <p class="mt-6 text-lg md:text-xl text-white/90 font-semibold leading-relaxed">
+                A student, aspiring <strong class="text-accent-dark">Filmmaker</strong>, and dedicated member of
+                my <strong class="text-accent-dark">community</strong>.
+            </p>
+            <p class="mt-3 text-base text-text-faint max-w-lg mx-auto">
+                My passion lies in applying critical thinking and leadership skills gained
+                through extracurriculars to real-world challenges.
+            </p>
+
+            <button id="enter-btn"
+                    class="mt-10 px-8 py-3 rounded-full bg-accent text-black font-bold text-lg shadow-xl shadow-accent/30 hover:bg-accent-dark transition-all duration-200 focus-ring transform hover:-translate-y-0.5 hover:shadow-2xl">
+                Enter Portfolio
+            </button>
+        </div>
+    </div>
+    <!-- END INTRO OVERLAY -->
+
+
+    <!-- NAV BAR: fixed top (INITIALLY HIDDEN) -->
+    <header id="header-nav" class="fixed top-4 left-0 right-0 z-40 pointer-events-auto opacity-0 hidden transition-opacity duration-300">
+        <nav class="max-w-6xl mx-auto px-6 md:px-12 flex items-center justify-between">
+            <!-- Logo/Name -->
+            <div class="flex items-center gap-4">
+                <a href="#" class="inline-flex items-center gap-3" onclick="showPage('page-about'); return false;">
+                    <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-accent to-accent-dark flex items-center justify-center text-black font-bold text-xl">
+                        A
+                    </div>
+                    <span class="text-white font-semibold text-lg hidden sm:inline">Arman Mohapatra</span>
+                </a>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div id="main-nav" class="hidden md:flex items-center gap-2 bg-black/40 px-2 py-1 rounded-full backdrop-blur-sm border border-white/10">
+                <a href="#" data-page="page-about" onclick="showPage('page-about'); return false;"
+                   class="nav-link text-gray-300 hover:text-accent transition px-4 py-2 rounded-full font-medium focus-ring bg-accent/20 text-accent" data-active="true">About</a>
+                <!-- Updated link from 'Projects' to 'Activities' -->
+                <a href="#" data-page="page-activities" onclick="showPage('page-activities'); return false;"
+                   class="nav-link text-gray-300 hover:text-accent transition px-4 py-2 rounded-full font-medium focus-ring">Activities</a>
+                <a href="#" data-page="page-contact" onclick="showPage('page-contact'); return false;"
+                   class="nav-link text-gray-300 hover:text-accent transition px-4 py-2 rounded-full font-medium focus-ring">Contact</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <div class="md:hidden">
+                <button id="mobile-toggle" class="p-2 rounded-full bg-black/40 focus-ring" aria-label="Open menu">
+                    <svg id="menu-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg id="menu-close" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile menu dropdown -->
+        <div id="mobile-menu" class="md:hidden fixed top-20 left-6 right-6 bg-black/80 backdrop-blur-md rounded-xl shadow-2xl shadow-black/50 p-4 hidden z-50 border border-white/10">
+            <div class="flex flex-col gap-3">
+                <a href="#" class="px-3 py-2 rounded text-gray-300 hover:bg-accent/10 hover:text-accent transition focus-ring" onclick="showPage('page-about'); toggleMobileMenu(); return false;">About</a>
+                <a href="#" class="px-3 py-2 rounded text-gray-300 hover:bg-accent/10 hover:text-accent transition focus-ring" onclick="showPage('page-activities'); toggleMobileMenu(); return false;">Activities</a>
+                <a href="#" class="px-3 py-2 rounded text-gray-300 hover:bg-accent/10 hover:text-accent transition focus-ring" onclick="showPage('page-contact'); toggleMobileMenu(); return false;">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT (INITIALLY HIDDEN) -->
+    <main id="main" class="relative z-10 pt-32 pb-24 max-w-6xl mx-auto px-6 md:px-12 opacity-0 hidden transition-opacity duration-300">
+
+        <!-- Page: About (Updated to match image_b15262.png) -->
+        <section id="page-about" class="page fade-section">
+            
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-10 items-start">
+                <div class="md:col-span-3">
+                    <!-- NEW BOX WRAPPER ADDED HERE -->
+                    <div class="bg-card-bg p-6 md:p-8 rounded-xl activity-card-glow shadow-2xl shadow-black/40">
+                        <!-- Title and Subtitle from image header -->
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2">About Me</h1>
+                        <p class="text-lg text-accent font-semibold mb-6 hidden md:block">Arman Mohapatra's Portfolio</p>
+
+                        <p class="text-white/90 text-lg leading-relaxed mb-8">
+                            I'm **Arman Mohapatra**, an 11th-grade student at DPS-MIS, Qatar, currently focused on Physics, Chemistry, Mathematics, and Computer Science (PCM CS). While I possess an active interest in <strong class="text-accent">coding</strong> and appreciate its power in solving complex problems through technology, my true aspiration lies in becoming a <strong class="text-accent">filmmaker</strong>. This seemingly unconventional path is balanced by a deep respect for learning, ensuring I prioritize academics. Complementing these pursuits, <strong class="text-accent">writing</strong> serves as a vital creative outlet, and I enjoy moments of relaxation through games like <strong class="text-accent">badminton and chess</strong>. This blend reflects a drive for both analytical rigor and creative expression.
+                        </p>
+                        <button onclick="showPage('page-activities');" class="px-6 py-3 rounded-lg bg-accent text-black font-semibold text-lg hover:bg-accent-dark transition focus-ring shadow-xl shadow-accent/30">
                             View My Activities
                         </button>
                     </div>
+                    <!-- END OF NEW BOX WRAPPER -->
                 </div>
-                <div class="flex justify-center md:justify-end">
-                    <!-- Profile Picture Placeholder - Fixed invalid URL -->
-                    <img src="https://placehold.co/200x200/38bdf8/0f172a?text=A.M" 
-                        alt="Profile photo of Arman Mohapatra" 
-                        class="w-48 h-48 object-cover rounded-full border-4 border-accent shadow-2xl">
+                <div class="md:col-span-2 flex justify-center md:justify-end">
+                    <!-- Circular Avatar with A.M -->
+                    <div class="w-48 h-48 rounded-full bg-accent flex items-center justify-center text-primary-dark font-bold text-5xl border-[10px] border-accent/30 shadow-2xl shadow-accent/40">
+                        A.M
+                    </div>
                 </div>
-            </section>
-
-            <!-- Skills and Interests Section -->
-            <section id="skills" class="mb-20">
-                <h2 class="text-3xl font-bold text-center mb-8 text-gray-100">Core Skills & Attributes</h2>
+            </div>
+            
+            <!-- Core Skills & Attributes -->
+            <div class="mt-20">
+                <h2 class="text-3xl font-extrabold text-white text-center mb-8">Core Skills & Attributes</h2>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <span class="px-4 py-2 bg-primary-dark text-accent border border-accent rounded-full text-sm font-medium shadow-md">Leadership</span>
-                    <span class="px-4 py-2 bg-primary-dark text-accent border border-accent rounded-full text-sm font-medium shadow-md">Problem Solving</span>
-                    <span class="px-4 py-2 bg-primary-dark text-accent border border-accent rounded-full text-sm font-medium shadow-md">Teamwork</span>
-                    <span class="px-4 py-2 bg-primary-dark text-accent border border-accent rounded-full text-sm font-medium shadow-md">Critical Analysis</span>
-                    <span class="px-4 py-2 bg-primary-dark text-accent border border-accent rounded-full text-sm font-medium shadow-md">Project Management</span>
-                    <span class="px-4 py-2 bg-primary-dark text-accent border border-accent rounded-full text-sm font-medium shadow-md">Public Speaking</span>
+                    <!-- Skill Tags matching image_b15262.png -->
+                    <span class="px-5 py-2 rounded-full border border-accent text-accent bg-accent/10 text-sm font-medium hover:bg-accent/20 transition">Leadership</span>
+                    <span class="px-5 py-2 rounded-full border border-accent text-accent bg-accent/10 text-sm font-medium hover:bg-accent/20 transition">Problem Solving</span>
+                    <span class="px-5 py-2 rounded-full border border-accent text-accent bg-accent/10 text-sm font-medium hover:bg-accent/20 transition">Teamwork</span>
+                    <span class="px-5 py-2 rounded-full border border-accent text-accent bg-accent/10 text-sm font-medium hover:bg-accent/20 transition">Critical Analysis</span>
+                    <span class="px-5 py-2 rounded-full border border-accent text-accent bg-accent/10 text-sm font-medium hover:bg-accent/20 transition">Project Management</span>
+                    <span class="px-5 py-2 rounded-full border border-accent text-accent bg-accent/10 text-sm font-medium hover:bg-accent/20 transition">Public Speaking</span>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
 
-        <!-- 3. Extracurricular Activities Page (Page 3 of 4) -->
-        <div id="page-activities" style="display: none;">
-            <section class="mb-20">
-                <h2 class="text-4xl font-bold text-center mb-12 text-gray-100">My Key Extracurriculars</h2>
+        <!-- Page: Activities (Updated with longer boxes) -->
+        <section id="page-activities" class="page fade-section hidden">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center mb-4">
+                My Key Extracurriculars
+            </h1>
+            <p class="text-center text-text-faint max-w-lg mx-auto mb-16 text-lg">
+                Extracurricular Impact and Leadership
+            </p>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                    <!-- Activity Card 1: Computer/STEM Club -->
-                    <div class="bg-primary-dark/80 backdrop-blur-sm p-6 rounded-xl shadow-lg hover:shadow-accent/50 transition duration-300 border border-transparent hover:border-accent-dark/50">
-                        <div class="text-5xl text-accent mb-4">🤖</div>
-                        <h3 class="text-2xl font-semibold mb-2">Computer Club (Director)</h3>
-                        <p class="text-gray-400 mb-4">1 year involvement</p>
-                        <p class="text-gray-300">
-                            Led a group of several junior and senior year students to educate them regarding various topics related to computer science such as sybersecurity, python programming, Involvement of AI in programming etc
-                        <ul class="mt-4 space-y-2 text-sm text-gray-400">
-                            <li class="flex items-center">
-                                <span class="text-accent mr-2">&bull;</span> Key Skill: Python Programming & Hardware Integration
-                            </li>
-                            <li class="flex items-center">
-                                <span class="text-accent mr-2">&bull;</span> Achievement: Increased team efficiency by 30% through modular code.
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Activity Card 2: Model UN/Debate Team -->
-                    <div class="bg-primary-dark/80 backdrop-blur-sm p-6 rounded-xl shadow-lg hover:shadow-accent/50 transition duration-300 border border-transparent hover:border-accent-dark/50">
-                        <div class="text-5xl text-accent mb-4">🗣️</div>
-                        <h3 class="text-2xl font-semibold mb-2">Independent Technical Portfolio</h3>
-                        <p class="text-gray-400 mb-4">3 years involvement</p>
-                        <p class="text-gray-300">
-                            Demonstrated self-directed mastery across the full stack by completing 50+ independent projects. This portfolio spans deep Python scripting, logic, and data structures, alongside responsive HTML/CSS/JavaScript development, combining analytical rigor with creative application
-                        </p>
-                        <ul class="mt-4 space-y-2 text-sm text-gray-400">
-                            <li class="flex items-center">
-                                <span class="text-accent mr-2">&bull;</span> Key Skill: Front-End UI/UX and Full-Stack Project Scoping.
-                            </li>
-                            <li class="flex items-center">
-                                <span class="text-accent mr-2">&bull;</span> Achievement: Front-End UI/UX and Full-Stack Project Scoping.
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Activity Card 3: Community Service/Volunteering -->
-                    <div class="bg-primary-dark/80 backdrop-blur-sm p-6 rounded-xl shadow-lg hover:shadow-accent/50 transition duration-300 border border-transparent hover:border-accent-dark/50">
-                        <div class="text-5xl text-accent mb-4">🌳</div>
-                        <h3 class="text-2xl font-semibold mb-2">Research Internship (Organizer)</h3>
-                        <p class="text-gray-400 mb-4">2 years involvement</p>
-                        <p class="text-gray-300">
-                            Did a research on ...........................
-                        </p>
-                        <ul class="mt-4 space-y-2 text-sm text-gray-400">
-                            <li class="flex items-center">
-                                <span class="text-accent mr-2">&bull;</span> Key Skill: Event Planning & Volunteer Management
-                            </li>
-                            <li class="flex items-center">
-                                <span class="text-accent mr-2">&bull;</span> Achievement: Documented 500+ service hours and removed 2 tons of waste.
-                            </li>
-                        </ul>
-                    </div>
-                    
-                </div>
+            <div class="grid md:grid-cols-3 gap-8">
                 
-                <div class="mt-12 text-center">
-                    <p class="text-gray-500 italic">These activities highlight my dedication, initiative, and ability to collaborate.</p>
+                <!-- Activity Card 1: Computer Club (Director) -->
+                <div class="bg-card-bg p-6 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
+                    <div class="flex items-start mb-4">
+                        <span class="text-4xl mr-3">🤖</span> <!-- Icon -->
+                        <h2 class="text-xl font-bold text-white leading-tight">Computer Club (Director)</h2>
+                    </div>
+                    <p class="text-sm text-text-faint mb-4">1 year involvement</p>
+                    <p class="text-white/90 mb-5 leading-relaxed text-sm">
+                        Led a group of several junior and senior year students to educate them regarding various topics related to computer science such as cybersecurity, python programming, Involvement of AI in programming etc.
+                    </p>
+                    
+                    <ul class="text-sm text-white/90 space-y-2">
+                        <li class="flex items-start">
+                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Key Skill:</span>
+                            <span class="ml-1 text-white/90 font-normal">Python Programming & Hardware Integration</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Achievement:</span>
+                            <span class="ml-1 text-white/90 font-normal">Increased team efficiency by 30% through modular code.</span>
+                        </li>
+                    </ul>
                 </div>
-            </section>
-        </div>
 
-
-        <!-- 4. Contact Page (Page 4 of 4) -->
-        <div id="page-contact" style="display: none;">
-            <section class="bg-primary-dark/80 backdrop-blur-sm p-8 rounded-xl text-center shadow-2xl min-h-[40vh] flex flex-col justify-center">
-                <h2 class="text-3xl font-bold mb-4">Let's Connect</h2>
-                <p class="text-gray-300 mb-6 max-w-xl mx-auto">
-                    I am always open to discussing new opportunities, projects, or collaborations. Feel free to reach out!
-                </p>
-                <div class="flex justify-center flex-wrap gap-6 text-lg">
-                    <a href="mailto:grindscriptz@gmail.com" class="text-gray-300 hover:text-accent transition duration-300 flex items-center">
-                        <span class="mr-2">📧</span> grindscriptz@gmail.com
-                    </a>
-                    <!-- Updated LinkedIn URL -->
-                    <a href="https://www.linkedin.com/in/arman-mohapatra-450059285" target="_blank" class="text-gray-300 hover:text-accent transition duration-300 flex items-center">
-                        <span class="mr-2">🔗</span> LinkedIn Profile
-                    </a>
-                    <a href="#" class="text-gray-300 hover:text-accent transition duration-300 flex items-center">
-                        <span class="mr-2">📄</span> Resume Download
-                    </a>
+                <!-- Activity Card 2: Independent Technical Portfolio -->
+                <div class="bg-card-bg p-6 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
+                    <div class="flex items-start mb-4">
+                        <span class="text-4xl mr-3">💻</span> <!-- Icon -->
+                        <h2 class="text-xl font-bold text-white leading-tight">Independent Technical Portfolio</h2>
+                    </div>
+                    <p class="text-sm text-text-faint mb-4">3 years involvement</p>
+                    <p class="text-white/90 mb-5 leading-relaxed text-sm">
+                        Demonstrated self-directed mastery across the full stack by completing 50+ independent projects. This portfolio spans deep Python scripting, logic, and data structures, alongside responsive HTML/CSS/Javascript development, combining analytical rigor with creative application.
+                    </p>
+                    
+                    <ul class="text-sm text-white/90 space-y-2">
+                        <li class="flex items-start">
+                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Key Skill:</span>
+                            <span class="ml-1 text-white/90 font-normal">Front-End UI/UX and Full-Stack Project Scoping.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Achievement:</span>
+                            <span class="ml-1 text-white/90 font-normal">Front-End UI/UX and Full-Stack Project Scoping.</span>
+                        </li>
+                    </ul>
                 </div>
-            </section>
-        </div>
 
+                <!-- Activity Card 3: Research Internship (Organizer) -->
+                <div class="bg-card-bg p-6 rounded-xl activity-card-glow shadow-2xl shadow-black/40 relative z-10 min-h-[400px]">
+                    <div class="flex items-start mb-4">
+                        <span class="text-4xl mr-3">🌳</span> <!-- Icon -->
+                        <h2 class="text-xl font-bold text-white leading-tight">Research Internship (Organizer)</h2>
+                    </div>
+                    <p class="text-sm text-text-faint mb-4">2 years involvement</p>
+                    <p class="text-white/90 mb-5 leading-relaxed text-sm">
+                        Did a research on ................................................................
+                    </p>
+                    
+                    <ul class="text-sm text-white/90 space-y-2">
+                        <li class="flex items-start">
+                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Key Skill:</span>
+                            <span class="ml-1 text-white/90 font-normal">Event Planning & Volunteer Management</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-accent mr-2 mt-1">•</span> <span class="font-semibold text-accent">Achievement:</span>
+                            <span class="ml-1 text-white/90 font-normal">Documented 500+ service hours and removed 2 tons of waste.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <p class="mt-12 text-center text-text-faint/70 italic max-w-xl mx-auto">
+                These activities highlight my dedication, initiative, and ability to collaborate.
+            </p>
+        </section>
+
+        <!-- Page: Contact (Hidden initially) -->
+        <section id="page-contact" class="page fade-section hidden">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-accent mb-10">
+                Contact
+            </h1>
+            <p class="text-lg text-white/80">
+                Feel free to reach out via the form below or connect on my social channels!
+            </p>
+            <!-- Simple Contact Form placeholder -->
+            <div class="mt-8 max-w-md bg-primary-dark/50 p-8 rounded-xl border border-white/10">
+                <form onsubmit="console.log('Form submitted!'); event.preventDefault();">
+                    <div class="mb-4">
+                        <label for="name" class="block text-sm font-medium text-white/90 mb-1">Name</label>
+                        <input type="text" id="name" name="name" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 focus:border-accent focus-ring transition" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block text-sm font-medium text-white/90 mb-1">Email</label>
+                        <input type="email" id="email" name="email" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 focus:border-accent focus-ring transition" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="message" class="block text-sm font-medium text-white/90 mb-1">Message</label>
+                        <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 focus:border-accent focus-ring transition" required></textarea>
+                    </div>
+                    <button type="submit" class="w-full px-4 py-2 bg-accent text-black font-bold rounded-lg hover:bg-accent-dark transition focus-ring">Send Message</button>
+                </form>
+            </div>
+        </section>
 
         <!-- Footer -->
-        <footer class="mt-12 pt-6 border-t border-primary-dark text-center text-sm text-gray-500">
-            &copy; 2025 Arman Mohapatra Portfolio. Built with Tailwind CSS.
+        <footer class="mt-16 text-center text-text-faint">
+            <div class="max-w-6xl mx-auto px-6 md:px-12">
+                <div class="flex flex-col md:flex-row md:justify-between items-center gap-4">
+                    <div>© <strong>Arman Mohapatra</strong> — <span id="cur-year"></span></div>
+                    <div class="text-sm space-x-4">
+                        <a href="#" class="hover:text-accent">LinkedIn</a>
+                        <a href="#" class="hover:text-accent">GitHub</a>
+                        <a href="#" class="hover:text-accent">IMDb</a>
+                    </div>
+                </div>
+            </div>
         </footer>
 
-    </div>
+    </main>
 
+    <!-- JavaScript for Page Navigation and Intro Handling -->
+    <script>
+        (function() {
+            // Updated PAGES list to reflect the new 'page-activities' ID
+            const PAGES = ['page-about', 'page-activities', 'page-contact'];
+            const intro = document.getElementById('intro-overlay');
+            const enterBtn = document.getElementById('enter-btn');
+            const mainContent = document.getElementById('main'); 
+            const headerNav = document.getElementById('header-nav');
+            // Select all navigation links
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // --- Initialization ---
+
+            // 1. Set current year in footer
+            document.getElementById('cur-year').textContent = new Date().getFullYear();
+
+            // 2. Hide all content and lock scroll for the intro screen
+            PAGES.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('hidden', 'opacity-0'); 
+            });
+            if (mainContent) mainContent.classList.add('hidden', 'opacity-0');
+            if (headerNav) headerNav.classList.add('hidden', 'opacity-0');
+            document.body.style.overflow = 'hidden'; 
+
+            // --- Core Functions ---
+
+            // Function to handle intro closing transition
+            function hideIntro() {
+                if (!intro) return;
+                intro.classList.add('opacity-0', 'scale-95'); // Fade and shrink effect
+                setTimeout(() => {
+                    intro.classList.add('hidden');
+                    document.body.style.overflow = 'auto'; // Re-enable scrolling
+                }, 700);
+            }
+
+            // Function to handle page visibility
+            window.showPage = function(pageId) {
+                // 1. Reveal main content elements (if hidden)
+                if (mainContent) mainContent.classList.remove('hidden', 'opacity-0');
+                if (headerNav) headerNav.classList.remove('hidden', 'opacity-0');
+
+                // 2. Toggle visibility of the correct page
+                PAGES.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    if (id === pageId) {
+                        el.classList.remove('hidden');
+                        requestAnimationFrame(() => {
+                            el.classList.remove('opacity-0');
+                            el.classList.add('opacity-100');
+                        });
+                    } else {
+                        el.classList.remove('opacity-100');
+                        el.classList.add('opacity-0');
+                        // Hide after transition completes
+                        setTimeout(() => { el.classList.add('hidden'); }, 300); 
+                    }
+                });
+
+                // 3. Update active state in navigation
+                navLinks.forEach(link => {
+                    const isActive = link.getAttribute('data-page') === pageId;
+                    link.setAttribute('data-active', isActive);
+                    // Ensure the classes reflect the active state correctly
+                    if (isActive) {
+                        link.classList.add('bg-accent/20', 'text-accent');
+                        link.classList.remove('text-gray-300');
+                    } else {
+                        link.classList.remove('bg-accent/20', 'text-accent');
+                        link.classList.add('text-gray-300');
+                    }
+                });
+            };
+
+            // Mobile menu toggle
+            window.toggleMobileMenu = function() {
+                const isOpen = mobileMenu.classList.contains('hidden');
+                mobileMenu.classList.toggle('hidden', !isOpen);
+                document.getElementById('menu-open').classList.toggle('hidden', !isOpen);
+                document.getElementById('menu-close').classList.toggle('hidden', isOpen);
+            };
+
+            // --- Event Listeners ---
+
+            // 'Enter Portfolio' button click
+            if (enterBtn) {
+                enterBtn.addEventListener('click', () => {
+                    hideIntro();
+                    showPage('page-about');
+                });
+            }
+
+            // Mobile menu button
+            if (mobileToggle) {
+                mobileToggle.addEventListener('click', toggleMobileMenu);
+            }
+
+            // Start on the 'About' page content, but keep it hidden behind the intro overlay
+            showPage('page-about');
+            if (mainContent) mainContent.classList.add('hidden', 'opacity-0');
+            if (headerNav) headerNav.classList.add('hidden', 'opacity-0');
+            
+        })();
+    </script>
 </body>
 </html>
-
