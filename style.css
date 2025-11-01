@@ -1,7 +1,9 @@
 /*
  * Custom CSS for Arman Mohapatra Portfolio
+ * Clean version without dark/light mode toggle
  * Contains global styles, background pattern, and card glow effects.
  */
+
 :root {
   --bg-color: #0f172a;
   --text-color: #ffffff;
@@ -10,34 +12,27 @@
   --dot-bg-color: #000000;
 }
 
-.light {
-  --bg-color: #f8fafc;
-  --text-color: #0f172a;
-  --card-bg: rgba(255, 255, 255, 0.8);
-  --dot-color: rgba(56, 189, 248, 0.2);
-  --dot-bg-color: #f8fafc;
-}
-
-/* Single body declaration using variables */
+/* Global Styles */
 body {
   background-color: var(--dot-bg-color);
   color: var(--text-color);
   background-image: radial-gradient(var(--dot-color) 0.6px, transparent 0.6px);
   background-size: 25px 25px;
-  perspective: 1000px; /* Required for 3D tilt effect */
+  perspective: 1000px; /* For 3D tilt effect */
   transition: background-color 0.4s ease, color 0.4s ease;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Card background using variable */
+/* Card Background */
 .bg-card-bg {
   background-color: var(--card-bg);
 }
 
-/* 2. CARD GLOW/BORDER & TILT SETUP */
+/* Card Glow and Tilt Effects */
 .activity-card-glow {
   position: relative;
   overflow: hidden;
-  border: 1px solid transparent; 
+  border: 1px solid transparent;
   background-clip: padding-box;
   transition: all 0.5s ease-out;
 }
@@ -59,7 +54,7 @@ body {
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  z-index: 0; 
+  z-index: 0;
   pointer-events: none;
   transition: all 0.3s ease;
 }
@@ -68,16 +63,21 @@ body {
   background: linear-gradient(135deg, rgba(56, 189, 248, 0.8) 0%, rgba(192, 132, 252, 0.4) 100%);
 }
 
-.focus-ring:focus-visible { 
-  outline: 3px solid rgba(56, 189, 248, 0.3); 
-  outline-offset: 2px; 
+/* Focus Styling */
+.focus-ring:focus-visible {
+  outline: 3px solid rgba(56, 189, 248, 0.3);
+  outline-offset: 2px;
 }
 
+/* Animation Base State */
 .animated-content {
   opacity: 0;
 }
 
+/* Smooth Transitions for Elements */
 * {
   transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
 }
+
+
 
